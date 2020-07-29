@@ -22,8 +22,8 @@ MAX = 257622.0
 def preprocess_data():
 
     # Adjustable parameters
-    solar_file_name = "./data/Lakeside California/289KW_PV_System_Hourly.csv"
-    weather_file_name = "./data/Lakeside California/LakesideCA_Solcast_15m.csv"
+    solar_file_name = "C:/Users/kgbko/Downloads/SolarEnergyPrediction-master/SolarEnergyPrediction-master/data/Lakeside California/289KW_PV_System_Hourly.csv"
+    weather_file_name = "C:/Users/kgbko/Downloads/SolarEnergyPrediction-master/SolarEnergyPrediction-master/data/Lakeside California/LakesideCA_Solcast_15m.csv"
 
     # Build a temporary data to store data in
     delete_test_train_split()
@@ -103,8 +103,8 @@ def delete_test_train_split():
 
 def train_model():
 
-    train = pd.read_csv("./out/train.csv")
-    test = pd.read_csv("./out/test.csv")
+    train = pd.read_csv("C:/Users/kgbko/Downloads/SolarEnergyPrediction-master/SolarEnergyPrediction-master/out/train.csv")
+    test = pd.read_csv("C:/Users/kgbko/Downloads/SolarEnergyPrediction-master/SolarEnergyPrediction-master/out/test.csv")
 
     # Pull apart the independent and dependent variables
     train_target = train["Generated"]
@@ -140,7 +140,7 @@ def train_model():
         early_stopping_rounds=20,
     )
     print(f"Duration: {time.time() - start}s")
-    pickle.dump(bst, open("./out/bst_model.pck", "wb"))
+    pickle.dump(bst, open("C:/Users/kgbko/Downloads/SolarEnergyPrediction-master/SolarEnergyPrediction-master/out/bst_model.pck", "wb"))
 
 
 def plot_model(bst):
@@ -153,7 +153,7 @@ def plot_model(bst):
     # Plot the importance of each feature
     xgb.plot_importance(bst)
     plt.gcf().subplots_adjust(left=0.15)
-    plt.savefig("./out/importance.png", bbox_inches="tight")
+    plt.savefig("C:/Users/kgbko/Downloads/SolarEnergyPrediction-master/SolarEnergyPrediction-master/out/importance.png", bbox_inches="tight")
     clear_plots()
 
     # Plot setup
@@ -164,7 +164,7 @@ def plot_model(bst):
     # Plot a decision tree
     matplotlib.rcParams["figure.dpi"] = 1080
     xgb.plot_tree(bst, num_trees=4, rankdir="LR")
-    plt.savefig("./out/tree.png")
+    plt.savefig("C:/Users/kgbko/Downloads/SolarEnergyPrediction-master/SolarEnergyPrediction-master/out/tree.png")
     clear_plots()
 
 
@@ -174,7 +174,7 @@ def test_model():
     smoothing_step = 1500
 
     # Load data
-    test = pd.read_csv("./out/test.csv")
+    test = pd.read_csv("C:/Users/kgbko/Downloads/SolarEnergyPrediction-master/SolarEnergyPrediction-master/out/test.csv")
 
     # Store dates for plotting output
     start_date = test["DateTime"][0]
@@ -187,7 +187,7 @@ def test_model():
     test = xgb.DMatrix(test)
 
     # Load model and plot it
-    bst = pickle.load(open("./out/bst_model.pck", "rb"))
+    bst = pickle.load(open("C:/Users/kgbko/Downloads/SolarEnergyPrediction-master/SolarEnergyPrediction-master/out/bst_model.pck", "rb"))
     plot_model(bst)
 
     # Create target vs prediction
@@ -229,7 +229,7 @@ def test_model():
     plt.title(
         f"Average Energy Generation Per Day From {end_date} to {start_date}\nAbsolute Error: {error:.2f} Watts"
     )
-    plt.savefig("./out/error.png")
+    plt.savefig("C:/Users/kgbko/Downloads/SolarEnergyPrediction-master/SolarEnergyPrediction-master/out/error.png")
     clear_plots()
 
     # Scatter plot setup
@@ -243,7 +243,7 @@ def test_model():
     plt.ylabel("Predicted Generation In Watts")
     plt.xlim(0.0, MAX)
     plt.ylim(0.0, MAX)
-    plt.savefig("./out/scatterplot.png")
+    plt.savefig("C:/Users/kgbko/Downloads/SolarEnergyPrediction-master/SolarEnergyPrediction-master/out/scatterplot.png")
     clear_plots()
 
 
@@ -260,4 +260,3 @@ if __name__ == "__main__":
     preprocess_data()
     train_model()
     test_model()
-
